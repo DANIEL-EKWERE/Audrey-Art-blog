@@ -1,0 +1,234 @@
+{% extends 'index.html'%}
+{% load static %}
+
+
+
+{% block content %}
+<!--Hero Area Starts-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%  static 'css/post_details.css' %}">
+    <title>Document</title>
+</head>
+<body>
+   
+</body>
+</html>
+{% block extrahead %}
+<div class="sliders">
+
+
+    <div class="hero-container">
+       <div class="hero-wrapper">
+            <div class="slide">
+                <img src="{% static 'images/2D Wallpaper.png' %}" alt="">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/album cover.png' %}" alt="">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/character design.png' %}" alt="">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/cover .png' %}" alt="">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/NFTs.png' %}" alt="">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/portrait toon art.png' %}" alt="">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/Tee j.png' %}" alt="">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/tuts & anim vids.png' %}" alt="">
+            </div>
+            
+            
+       </div>
+        
+        <div class="swiper-pagination">
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+        </div>
+    </div>
+
+
+</div>
+   
+</body>
+<section class=" hero">
+    
+    
+
+    <!-- <div class="formBox"> -->
+        <form action="/Search_Result/" method="POST" class="formBox">
+            {% csrf_token %}
+        <input type="search" class="form__search" name="query" placeholder="Search for post here..." id="search">
+
+        <input type="submit" class="form__btn" value="search post">
+        </form>
+    <!-- </div> -->
+</section>
+
+   
+
+</body>
+{% endblock %}
+ <!--Hero ends Starts-->
+<!--Main Area starts-->
+<section class="main-area-container">
+    <div class="main-area-wrapper">
+        <div class="blog-container">
+            {% if query %}
+            <h1 style="margin-bottom: 10px;">You Searched for "{{query}}"</h1>
+            <div class="blog-container-wrapper">
+                {% for data in posts %}
+                    <div class="blog-card">
+                        <img class="card-image" src="{{data.image.url}}" alt="">
+                        <div class="blog-item">
+                            <div class="blog-list-meta">
+                                <a class="blog-author" href="#">
+                                    <img src="{{data.author.image.url}}" alt="Blog Author">
+                                    <span>{{data.author}}</span>
+                                </a>
+                                <a class="blog-category" href="#">{{data.category}}</a>
+                            </div>
+                            <div class="blog-text">
+                                <h3>{{data.title}}</h3>
+                                <p>{{ data.body|safe|truncatechars:100 }}</p>
+                                <a class="blog-list-btn" href="#">Read More...</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+            </div>
+           
+            {% else %}
+            <h1>Hey! You forgot to search for a Post.....</h1>
+            {% endif %}
+        </div>
+        <div class="blog-sidebar">
+            <div class="sidebar-container-1">
+                <div class="blog-search-sidebar">
+                    <form action="{% url 'Search_Result' %}" method="POST">
+                        {% csrf_token %}
+                        <input name="query" type="search" placeholder="Search Blog Post" >
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="sidebar-widget recent-post">
+                    <h3>Recent Post</h3>
+                    {% for data in recent_posts %}
+                        <div class="single-recent-post">
+                            <a href="blog-details.html">
+                                <img src="{{ data.image.url }}" alt="Recent Post">
+                                <span>{{data.title}}</span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+            <div class="sidebar-container-2">
+                <div class="blog-category-list">
+                    <h3>Blog Category list</h3>
+                    <ul>
+                        <li><a href="{% url 'category' 'cover art' %}">Cover Art</a></li>
+                        <li><a href="{% url 'category' 'toon art' %}">Toon Art</a></li>
+                        <li><a href="{% url 'category' 'sketches' %}">thumbnail sketches</a></li>
+                        <li><a href="{% url 'category' 'portrait art' %}">Portrait</a></li>
+                        <li><a href="{% url 'category' '2d wallpaper' %}">2D Wallpaper</a></li>
+                        <li><a href="{% url 'category' 'tee jee' %}">Tee jee</a></li>
+                        <li><a href="{% url 'category' 'anim vids & tuts' %}">Animated vids & tuts</a></li>
+                        <li><a href="{% url 'category' 'NFTs' %}">NFTs</a></li>
+                        <li><a href="{% url 'category' 'music album art' %}">Music Album</a></li>
+                        <li><a href="{% url 'category' 'character design' %}">Character Design</a></li>
+                    </ul>
+                </div>
+
+                <div class="blog-archive-list">
+                    <h3>Blog Archive</h3>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <span class="archive-date">January 2022</span>
+                                <span class="archive-post-number">3</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="archive-date">February 2022</span>
+                                <span class="archive-post-number">4</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="archive-date">March 2022</span>
+                                <span class="archive-post-number">7</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="archive-date">April 2022</span>
+                                <span class="archive-post-number">6</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="archive-date">May 2022</span>
+                                <span class="archive-post-number">5</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Main Area Ends -->
+
+
+<!--Recomeneded Post-->
+<section class="recommended-area-container">
+    <div class="recommended-area-wrapper">
+        <h2>Recomeneded Post</h2>
+        <div class="recommended-container-wrapper">
+                    {% for data in recent_posts %}
+                    <div class="blog-card">
+                        <img class="card-image" src="{{data.image.url}}" alt="">
+                        <div class="blog-item">
+                            <div class="blog-list-meta">
+                                <a class="blog-author" href="#">
+                                    <img src="{{data.author.image.url}}" alt="Blog Author">
+                                    <span>{{data.author}}</span>
+                                </a>
+                                <a class="blog-category" href="#">{{data.category}}</a>
+                            </div>
+                            <div class="blog-text">
+                                <h3>{{data.title}}</h3>
+                                <p>{{ data.body|safe|truncatechars:100 }}</p>
+                                <a class="blog-list-btn" href="{% url 'Post_Detail' data.id %}">Read More...</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+    </div>
+</section>
+<!--Recomeneded Post ends-->
+{% endblock %}

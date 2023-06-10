@@ -1,0 +1,66 @@
+{% extends 'index.html '%}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/signup.css '%}">
+{% endblock %}
+{% block content %}
+ <div class="body">
+    <link rel="stylesheet" href="{% static 'css/signup.css '%}">
+    <div class="Container-signup">
+        <div class="profile-items">
+            <i class="far fa-user-circle"></i>
+            <h1>Sign Up</h1>
+            <p>Sign Up and Start Learning!</p>
+        </div>
+        <form class="form" action="" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <p style="color: red;">{{field.errors}}</p>
+            {% endfor %}
+            <div class="form-items">
+                <div class="items">
+                    <i class="fas fa-user"></i>
+                    {{form.username}}
+                    {{form.username.errors}}
+                </div>
+                <div class="items">
+                    <i class="fas fa-user"></i>
+                    {{form.first_name}}
+                </div>
+                <div class="items">
+                    <i class="fas fa-user"></i>
+                    {{form.last_name}}
+                </div>
+                <div class="items">
+                    <i class="fas fa-envelope"></i>
+                    {{form.email}}
+                </div>
+                <div class="items">
+                    <i class="fas fa-lock"></i>
+                    {{form.password1}}
+                </div>
+                <div class="items">
+                    <i class="fas fa-lock"></i>
+                    {{form.password2}}
+                </div>
+                <div class="checkbox">
+                    <input class="checkinput" type='checkbox'>
+                    <p> Yes! I want to get the most out of CodeCamp Inc by receiving emails with exclusive deals, personal
+                        recommendations and learning tips!
+                    </p>
+                </div>
+                <div class="submit">
+                    <button type="submit">Sign Up</button>
+                </div>
+                <div>
+                    <p>By signing up, you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p>
+                </div>
+                <div class="login">
+                    <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+ </div>
+{% endblock %}

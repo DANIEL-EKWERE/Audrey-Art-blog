@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<center style="margin-top: 10%;">
+    <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 10%; justify-content: center ; gap: 25px;">
+        {% csrf_token %}
+        <!-- <table class="w-50 table table-light" style="border-radius: 10px;">
+            {% for field in upload_form %}
+            <tr>
+                <th>{{ field.lable }}</th>
+                <tbody>{{ field }}</tbody>
+            </tr>
+            {% endfor %}
+        </table> -->
+
+
+
+
+        {{form.as_p}}
+
+
+
+
+        <button type="submit" class="btn btn-lg btn-success md-5">Upload</button>
+    </form>
+</center>
+
+{% endblock %}

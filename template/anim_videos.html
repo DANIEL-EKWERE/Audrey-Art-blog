@@ -1,0 +1,104 @@
+{% extends 'index.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/anim_videos.css' %}">
+
+    <title>Animated videos</title>
+</head>
+<body>
+    </header>
+    <div class="hero" style="background-image: url('/static/images/tuts & anim vids.png');">
+        <div class="content">
+            <!-- <h4>Hello, my name is</h4> -->
+            <h1 class="h1"><span>animated videos</span></h1>
+            <h3 class="h3">videos from the <span>anim videos</span> category</h3>
+            <div class="newsletter">
+                <form action="">
+                    <input type="email" name="email" id="mail" placeholder="Enter Your Email Here">
+                    <input type="submit" name="submit" value="Subscribe">
+                </form>
+            </div>
+           <p> Subscribe to our newsletter for the<br>
+            best post from the <span>  nft  </span>category as we upload them.</p>
+        </div>
+    </div>
+
+    <div class="animatedVids">
+        <div class="caption">
+            <h1>Pre Animated Art</h1>
+            <p>Enjoy Visually appealing art <br> animated by audrey art</p>
+        </div>
+    
+        <div class="vids">
+            {% for post in page.object_list %}
+            <div class="vidCon">
+                {% video post.video '300x300' %}
+                <center>
+                    <h3>{{ post.title }}</h5>
+                        <p>AudreyArt</p>
+                        <p>{{ post.created }}</p>
+                </center>
+                
+            </div>
+                {% empty %}
+                <p>empty section</p>
+                {% endfor %}
+            
+           
+        </div>
+    
+    </div>
+
+   
+    <div class="next">
+        <a href="#">pages: {{ page.number }}/{{ page.paginator.num_pages }}</a>
+    </div>
+
+    <div class="container" style="width: 100vw; align-items: center; justify-content: center;">
+        <ul style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+            {% if page.has_previous %}
+            <li><a href="{% url 'Pre_Anim_Vids' anim %}?page={{ page.previous_page_number }}" id="cate"  style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">Previous</a></li>
+            {% endif %}
+
+<!-- here -->
+            {% if page.number|add:'-2' > 1 %}
+
+            <li><a href="{% url 'Pre_Anim_Vids' anim %}?page={{ page.number|add:'-2' }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">&hellip;</a></li>
+            
+            {% endif %}
+
+<!-- here -->
+            {% for num_page in page.paginator.page_range %}
+            {% if num_page == page.number %}
+            <li><a href="{% url 'Pre_Anim_Vids' anim %}?page={{ num_page }}" style="padding: 5px 10px; background-color: blueviolet; color: white; margin: 5px; font-size: 15px; border: 2px solid blueviolet; border-radius: 10px;">{{ num_page }}</a></li>
+            {% elif num_page > page.number|add:'-2' and num_page < page.number|add:'2' %}  <!-- here -->
+            <li><a href="{% url 'Pre_Anim_Vids' anim %}?page={{ num_page }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">{{ num_page }}</a></li>
+            {% endif %}
+            {% endfor %}
+            <!-- here -->
+
+            {% if page.paginator.num_page > page.number|add:'-2' %}
+            <li><a href="{% url 'Pre_Anim_Vids' anim %}?page={{ page.number|add:'2' }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">&hellip;</a></li>
+            <li><a href="{% url 'Pre_Anim_Vids' anim %}?page={{ num_page }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">{{ num_page }}</a></li>
+            <li><a href="{% url 'Pre_Anim_Vids' anim %}?page={{ page.paginator.num_pages }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">{{ page.paginator.num_pages }}</a></li>
+            {% endif %}
+<!-- here -->
+            {% if page.has_next %}
+            <li><a href="{% url 'Pre_Anim_Vids' anim %}?page={{ page.next_page_number }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <script src="anim_videos.js"></script>
+</body>
+{% endblock %}
+</html>

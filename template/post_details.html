@@ -1,0 +1,439 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/post_details.css' %}">
+    <title>Post details</title>
+    <link rel="stylesheet" href="{% static 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css' %}" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+</head>
+<body >
+    <!--Preloader Starts-->
+   <!--
+     <div class="preloader-wrapper">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+   -->
+    <!--Preloader Ends-->
+   
+
+
+    <!--Mobile Navigation ends-->
+    <!--Hero Area Starts-->
+
+
+    
+
+
+    <!--Main Area starts-->
+    <section class="main-area-container" style="margin-top: 170px ;">
+       
+        <div class="main-area-wrapper">
+            <div class="blog-container">
+                <div class="blog-container-wrapper">
+                    
+                    <div class="blog-card">
+                        <img class="card-image" src="{{post.image.url}}" alt="">
+                        <div class="blog-item">
+                            <div class="blog-list-meta">
+                                <a class="blog-author" href="#">
+                                    <img src="{{ post.author.image.url }}" alt="Blog Author">
+                                    <span>{{ post.author.user }}</span>
+                                </a>
+                                <a class="blog-category" href="{% url 'category' post.category %}">{{ post.category }}</a>
+                            </div>
+                            <p>{{ post.created }}</p>
+                            <div class="blog-text">
+                                <h3>{{ post.title }}</h3>
+                                <p> {{ post.body|safe }}
+                                </p>
+                                {% if post.youtube.id %}
+                                <p>to see how this was drawn from start to finish {{ post.id }} and {{ post.youtube.id }} <a href="{% url 'video' post.youtube.id %}" id="post.youtube.id">click here</a></p>
+                                {% else %}
+                                <p>video unavailable</p>
+                                {% endif %}
+                                <p>Get it as wallpaper by  <a href="{{ post.image.url }} " download="{{ post.title }}">downloading</a></p>
+                            </div>
+                        </div> 
+                    </div>
+                   
+                    <!--this code starts here  -->
+                      
+                    <div class="blog-details-contact-form">
+                        {% if user.is_authenticated %}
+                            <h2>Comments</h2>
+                            <form action="" method="POST" class="comment_form">
+                                {% csrf_token %}
+                                {{ comment_form.body }}
+                                
+                                <p>
+                                    <button type="submit">
+                                        Comment
+                                        <i class="bi bi-send"></i>
+                                    </button>
+                                </p>
+                            </form>
+                        {% else %}
+                            <h2>You need to login to comment</h2>
+                        {% endif %}
+
+                    </div> 
+
+
+<!-- fix starts -->                      
+                        {% for comment in comments  reversed %}
+                            <div class="comment-container">
+                              
+                                <div class="comment-wrapper">
+                                    
+                                    <div class="author-card">
+                                        
+                                       
+                                        <p>{{comment.User}}</p>
+                                        
+                                        <p>on {{ comment.created }}</p>
+                                    </div>
+                                        <p>{{ comment.body }}</p>
+                                       
+                                
+                                                {% for replies in comment.children %}
+                                                    <div id="reply-card">
+                                                        <p>{{ replies.User }}</p>
+                                                        <p>on {{ replies.created }}</p>
+                                                        <p>{{replies.body}}</p>
+                                                    </div>
+                                                {% endfor %} 
+                            
+                                    <button class="submit-btn" onclick="handleReply()">
+                                        <h3>Reply</h3>
+                                    </button>
+                                    <button class="cancel-btn" type="button" onclick="" >Cancel</button>
+                                    <div id="reply-form-container-{{comment.id}}">
+                                
+                                            <form action="" method="POST">
+                                                {% csrf_token %}
+                                            
+                                                <input type="text" name="body" id="body-reply" style="outline: none;" placeholder="reply here" value="">
+                                                <input type="hidden" name="parent" value="{{comment.id}}">
+                                                <button class="reply-btn" type="submit" onclick="refresh()">Submit</button>
+                                            </form> 
+                                    
+                                    </div>
+                                    
+                                </div>
+                             
+                            </div>
+                       
+                        {% endfor %}
+
+
+
+                       <!-- fix ends  -->
+
+                </div> 
+
+
+
+
+
+
+
+
+            </div> 
+            <div class="blog-sidebar">
+                <div class="sidebar-container-1">
+                    <div class="blog-search-sidebar">
+                        <form action="" method="POST">
+                        
+                            <input name="query" type="search" placeholder="Search Blog Post" >
+                            <button type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-widget recent-post">
+                        <h3>Recent Post</h3>
+                        
+                        <div class="single-recent-post">
+                            <a href="">
+                                <img src="/static/images/Tee j.png" alt="Recent Post">
+                                <span>{{post.title}}</span>
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="sidebar-container-2">
+                    <div class="blog-category-list">
+                        <h3>Blog Category list</h3>
+                        <ul>
+                           
+                                <!-- <li><a href="#">{{data.title}}</a></li> -->
+                           
+                        </ul>
+                    </div>
+
+                    <div class="blog-archive-list">
+                        <h3>Blog Archive</h3>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span class="archive-date">January 2022</span>
+                                    <span class="archive-post-number">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="archive-date">February 2022</span>
+                                    <span class="archive-post-number">4</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="archive-date">March 2022</span>
+                                    <span class="archive-post-number">7</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="archive-date">April 2022</span>
+                                    <span class="archive-post-number">6</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="archive-date">May 2022</span>
+                                    <span class="archive-post-number">5</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Main Area Ends -->
+    
+    <!--Recomeneded Post-->
+    <section class="recommended-area-container">
+        <div class="recommended-area-wrapper">
+            <h2>Recomeneded Post</h2>
+
+
+
+
+        <div class="recommend">
+                <div class="body">
+
+                    {% for post in recent_posts  %}
+
+                    <div class="wrapper">
+                        <div class="pt1">
+                            <img src="{{ post.image.url }}" alt="">
+                        </div>
+                        <div class="pt2">
+                            <h3>{{ post.title }}</h3>
+                            <p>{{ post.body|safe|truncatechars:50 }}</p>
+                            <a href="#">Read</a>
+                        </div>
+            
+                    </div>
+                    {% endfor %}
+            
+                    
+                </div>
+                
+                <div class="next">
+                    <a href="#">See Next</a>
+                </div>
+            </div>
+
+
+
+
+
+
+               
+        </div>
+    </section>
+    {% endblock %}
+    <section>
+        <div class="anim">
+            <div class="element">
+            cover_art
+            </div>
+            <div class="element">
+               •
+                </div>
+            <div class="element">
+            sketch
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            2D_Wallpaper
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            animated_videos
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            potrait
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            thumbnail_sketches
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            toon_art
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            Tee_j
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            music_cover_art
+            </div>
+            <div class="element">
+                •
+                </div>
+            <div class="element">
+            tutorial
+            </div>
+            <div class="element">
+                •
+                 </div>
+        </div>
+    </section>
+     <!--Recomeneded Post ends-->
+     <!--footer Area starts-->
+    <section class="lastPart">
+        <div class="copyright">
+            <p>All Right Reserve © 2023 AudreyArt</p>
+            <div class="icons">
+                <img src="images/facebook icon.png" alt="facebook" style="scale: 1.2rem;">
+                <img src="images/instagram icon1.png" alt="instagram">
+                <img src="images/linkedIn icon`.png" alt="linkedIn">
+                <img src="images/twitter icon1.png" alt="twitter">
+            </div>
+        </div>
+
+    </section>
+      <!--footer Area ends-->
+      <!-- scroll reveal effect -->
+      <script src="https://unpkg.com/scrollreveal"></script>
+      <!-- javascript function -->
+      <script src="post_details.js"></script>
+</body>
+{% block script %}
+<script>  
+//  type="javascript" src="{ % static 'js/index.js' % }">
+
+
+let slideIndex = 0;
+showSlides();
+
+function refresh() {
+  // Change image every 2 secon
+
+  let no_comments1 = document.querySelector('.comment-form').innerHTML.value = '';
+  let no_comments2 = document.querySelector('#body-reply').innerHTML.value = '';
+
+};
+
+
+
+
+</script>
+{% endblock %}
+</html>
+
+
+
+  <!-- my code starts here  ***-->
+
+                    <!-- <h2> comments </h2>
+                        
+                     {% if user.is_authenticated %}
+                     <form action="" method="POST" id="main_form" class="comment_form">
+                       
+                        <div>
+                            <label for="comment">type comment here</label>
+                            {{ comment_form.body }}  {% csrf_token %}
+                            <input type="submit" value="post">
+                        </div>
+                        {% else %}
+                        <h2>you havr to log in to comment</h2>
+                        {% endif %}
+
+                        {% for comment in comments reversed %}
+                            {% if comment.User %}
+                            <h3><b>{{ comment.User }} :</b> {{ comment.body }}</h3>
+                            {% endif %}
+                            {% for replies in comment.children %}
+                            <h3>&nbsp; &nbsp; &nbsp;  <b>{{ comment.User  }} :</b> {{ replies.body }}</h3>
+                            {% endfor %}
+                        {% endfor %}
+                     </form> -->
+
+
+
+                     
+                                                            <!-- 
+                                                            <h2> comments </h2>
+                                                                    
+                                                            {% if user.is_authenticated %}
+                                                                    <form action="" method="POST" id="main_form" class="comment_form">
+                                                                    
+                                                                    <div>
+                                                                        <label for="comment">type comment here</label>
+                                                                        {{ comment_form.body }}  {% csrf_token %}
+                                                                        <input type="submit" value="post">
+                                                                    </div>
+                                                                {% else %}
+                                                                    <h2>you have to log in to comment</h2>
+                                                                {% endif %}
+
+                                                                {% for comment in comments reversed %}
+                                                                    {% if comment.is_parent %}
+                                                                        <h3><b>{{ comment.User }} :</b> {{ comment.body }}</h3>
+                                                                        &nbsp; &nbsp; &nbsp;
+                                                                        <form action="POST" id="main_form" class="comment_form">
+                                                                            <div>
+                                                                                &nbsp; &nbsp; &nbsp; <label for="comment">Reply here</label>
+                                                                                &nbsp; &nbsp; &nbsp; <input type="text" name="body" id="body"> 
+                                                                                <input type="hidden" value="{{ comment.pk }}" name="parent">
+                                                                                {% csrf_token %}
+                                                                                <input type="submit" value="Post">
+                                                                            </div>
+                                                                        </form>
+                                                                    {% endif %}
+
+                                                                    {% for replies in comment.children %}
+                                                                        <h3>&nbsp; &nbsp; &nbsp; <b>{{ comment.User }} : </b> {{ replies.body }} </h3>
+                                                                    {% endfor %}
+                                                                {% endfor %} -->

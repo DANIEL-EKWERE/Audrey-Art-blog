@@ -1,0 +1,222 @@
+{% extends 'index.html' %}
+{% load embed_video_tags %}
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+    {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/video.css' %}">
+
+    
+    <!-- boxicon link-->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"> -->
+
+    <!-- remixicon link -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"> -->
+
+    <!-- google font link -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"> -->
+
+
+    <title>Video</title>
+</head>
+<body>
+    <!-- <header>
+        <a href="#" class="logo">Audrey <span style="color: red;">Art</span></a>
+
+        <ul class="navlist">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Subscribe</a></li>
+        </ul>
+
+        <div class="bx bx-menu" id="menu-icon"></div>
+        <a href="#" class="getStarted">Get Started</a>
+    </header> -->
+        
+    <div class="vidCon">
+        
+        {%video vid.video '300x300' %}
+        <div class="sec">{{ vid.title }}
+            <p>AudreyArt</p>
+            <p>{{ vid.created }}</p>
+            <!-- <p>45k views • 2 days ago </p> -->
+        </div>
+        
+         
+    </div>
+
+    <hr style="margin: 1% 0% 5%; width: 100%;">
+
+    <div class="comment">
+        <h1>Add Comment</h1>
+        <p>log  in to comment on post</p>
+    </div>
+
+    <div class="user">
+        <div class="first"></div>
+        <!-- <img src="images/Men Two Tone Letter & Tropical Print Zip Up Thermal Hoodie Without Tee.jpeg" alt=""> -->
+        
+        <div class="second">
+            <h2>Daniel Ekwere</h2>
+            <textarea name="comment" id="comment" cols="120" rows="18" placeholder="add comment here..." style=" background-color: #ececec; padding: 20px; border: none;"></textarea>
+            <button type="submit">comment</button>
+        </div>
+    </div>
+
+    <hr style="margin: 1% 0% 5%; width: 100%;">
+    <div class="recomd">
+        <h1>Recommended videos</h1>
+     </div>
+
+     <div class="animatedVids">
+        <div class="vids">
+            <div class="vidCon">
+                <iframe height="300"
+                src="https://yotu.be/embed/Y5G9KT2g4O0?HD=1" frameborder="0"></iframe>
+                <h3>Lorem ipsum dolor sit amet consectetur <br> adipisicing elit ipsum dolor.</h5>
+                <p>AudreyArt</p>
+                <p>45k views • 2 days ago</p>
+            </div>
+            <div class="vidCon">
+                <iframe height="300"
+                 src="https://yotu.be/embed/_u4Aowe74bo" frameborder="0"></iframe>
+                 <h3>Lorem ipsum dolor sit amet consectetur <br> adipisicing elit ipsum dolor.</h5>
+                <p>AudreyArt</p>
+                <p>45k views • 2 days ago</p>
+            </div>
+            <div class="vidCon">
+                <iframe height="300"
+                src="https://yotu.be/embed/shorts/pQUdNeWQPR8?feature=share" frameborder="0"></iframe>
+                <h3>Lorem ipsum dolor sit amet consectetur <br> adipisicing elit ipsum dolor.</h5>
+                <p>AudreyArt</p>
+                <p>45k views • 2 days ago</p>
+            </div>
+            
+           
+        </div>
+       
+    
+    </div>
+    <div class="next">
+        <a href="#">See All</a>
+    </div>
+
+
+
+
+<!-- 
+
+    <section>
+        <div class="anim">
+            <div class="element">
+            cover_art
+            </div>
+            <div class="element">
+               •
+                </div>
+            <div class="element">
+            sketch
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            2D_Wallpaper
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            animated_videos
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            potrait
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            thumbnail_sketches
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            toon_art
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            Tee_j
+            </div>
+            <div class="element">
+                •
+                 </div>
+            <div class="element">
+            music_cover_art
+            </div>
+            <div class="element">
+                •
+                </div>
+            <div class="element">
+            tutorial
+            </div>
+            <div class="element">
+                •
+                 </div>
+        </div>
+    </section>
+
+
+
+    <footer>
+        <div class="first">
+            <div class="email">
+                <h1>Get the best of our newsletter</h1>
+                <p>Stay upto date with lattest news, anouncement, article etc.</p>
+            </div>
+            <div class="form">
+                <form action="#">
+                    <input type="email" name="email" id="email">
+                    <input type="submit" name="submit" value="Subscribe">
+                </form>
+            </div>
+        </div>
+        
+        <div class="wrapper1">
+            <div class="logo">
+                <h1>Audrey <span style="color: red;">Art</span></h1>
+                <p>Bridging the gap <br> between art and <br> reality</p>
+            </div>
+
+    
+    
+    </footer>
+    
+    <section class="lastPart">
+        <div class="copyright">
+            <p>All Right Reserve © 2023 AudreyArt</p>
+            <div class="icons">
+                <img src="images/facebook icon.png" alt="facebook" style="scale: 1.2rem;">
+                <img src="images/instagram icon1.png" alt="instagram">
+                <img src="images/linkedIn icon`.png" alt="linkedIn">
+                <img src="images/twitter icon1.png" alt="twitter">
+            </div>
+        </div>
+
+    </section> -->
+    
+    <script src="video.js"></script>
+    {% endblock %}
+</html>

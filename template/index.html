@@ -1,0 +1,458 @@
+{% load embed_video_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <!--  -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--javascript link -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+    <!-- <script src="{ % static 'js/index.js' % }"></script> -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <!-- boxicon link-->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- remixicon link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+
+    <!-- google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+
+    <title>Audrey Art</title>
+</head>
+<body>
+    
+    <header>
+        <a href="{% url 'home' %}" class="logo">Audrey <span style="color: red;">Art</span></a>
+
+        <ul class="navlist">
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href=mailto:ekweredaniel8@gmail.com?subject=Contacting-audreyArt-for.......>Contact Us</a></li>
+            <li><a href=mailto:ekweredaniel8@gmail.com?subject=Subscribing-to-audreyArt>Subscribe</a></li>
+            {% else %}
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About Us</a></li>
+            <li><a href=mailto:ekweredaniel8@gmail.com?subject=Contacting-audreyArt-for.......>Contact Us</a></li>
+            <li><a href=mailto:ekweredaniel8@gmail.com?subject=Subscribing-to-audreyArt>Subscribe</a></li>
+            <li><a href="{% url 'login' %}" style="color: transparent;">login</a></li>
+            {% endif %}
+        </ul>
+
+        <div class="bx bx-menu" id="menu-icon"></div>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="getStarted">logout</a>
+        {% else %}
+        <a href="{% url 'signup' %}" class="getStarted">Get Started</a>
+        {% endif %}
+    </header>
+
+  
+    <!--start here -->
+    
+<body>
+    {% block content %}
+    {% block extrahead %}
+
+    <div class="sliders">
+
+
+        <div class="hero-container">
+           <div class="hero-wrapper">
+                <div class="slide">
+                    <img src="{% static 'images/2D Wallpaper.png' %}" alt="">
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/album cover.png' %}" alt="">
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/character design.png' %}" alt="">
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/cover .png' %}" alt="">
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/NFTs.png' %}" alt="">
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/portrait toon art.png' %}" alt="">
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/Tee j.png' %}" alt="">
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/tuts & anim vids.png' %}" alt="">
+                </div>
+                
+                
+           </div>
+            
+            <div class="swiper-pagination">
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+            </div>
+
+            <div class="containeR">
+                <h1 style="color: white; text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">Audrey Art: <span class="element" style="font-weight: bolder;"></span></h1>
+            </div>
+
+
+        </div>
+
+
+       
+
+    </div>
+   
+</body>
+<section class=" hero">
+    
+    
+
+    <!-- <div class="formBox"> -->
+        <form action="/Search_Result/" method="POST" class="formBox">
+            {% csrf_token %}
+        <input type="search" class="form__search" name="query" placeholder="Search for post here..." id="search">
+
+        <input type="submit" class="form__btn" value="search post">
+        </form>
+    <!-- </div> -->
+
+    
+    {% endblock %}
+    <div class="posts">
+        <div class="caption">
+            <h1>Recent Blog Posts</h1>
+            <p>get the most recent blog post from <br> audrey art</p>
+        </div>
+       
+    </div>
+   
+</section>
+
+
+<section class="sectioning">
+
+    <div class="body">
+        {% for post in posts reversed %}
+        <div class="wrapper">
+            <div class="pt1">
+                <img src="{{ post.image.url }}" alt="">
+            </div>
+            <div class="pt2">
+                <div class="time">
+                    <div class="upper">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.author }}</p>
+                    </div>
+                    <p>{{ post.created }}</p>
+                </div>
+                
+                <p>{{post.body|safe|truncatechars:50}}</p>
+                <div class="sec">
+                  
+                    <a href="{% url 'Post_Detail' post.id %}" id="post.id">Read</a>
+                    
+                  
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+<div class="categories">
+    <h1>categories</h1>
+    <p>Get post from a wide variety</p>
+</div>
+<!-- refix -->
+<div class="cate">
+    <!-- checked 9-->
+   <a href="{% url 'category' 'portrait toon art' %}" id="NFTs"> <div class="links" style="background-image: url('/static/images/portrait toon art.png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">potrait Toon Art</p>
+    </div>
+</a>
+<!-- checked 8-->
+<a href="{% url 'category' 'character design' %}"><div class="links" style="background-image: url('/static/images/character design.png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">character design</p>
+    </div>
+</a>
+<!-- checked 7-->
+     <a href="{% url 'category' 'tutorials' %}"><div class="links" style="background-image: url('/static/images/Tee jee.png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">tutorials</p>
+    </div>
+     </a>
+     <!-- checked 6-->
+     <a href="{% url 'category' '2d wallpaper' %}"><div class="links" style="background-image: url('/static/images/2D Wallpaper.png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">2D Wallpaper</p>
+    </div>
+     </a>
+<!-- checked 5-->
+     <a href="{% url 'category' 'music cover art' %}"><div class="links" style="background-image: url('/static/images/cover .png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">music cover</p>
+    </div>
+     </a>
+<!-- checked 4-->
+     <a href="{% url 'category' 'sketches' %}"><div class="links" style="background-image: url('/static/images/thumbnail sketches.png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">sketches</p>
+    </div>
+     </a>
+     <!-- checked 3-->
+     <a href="{% url 'category' 'NFTs' %}"><div class="links" style="background-image: url('/static/images/NFTs.png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">NFTs</p>
+    </div>
+     </a>
+<!-- checked 2-->
+     <a href="{% url 'category' 'tee jay' %}"><div class="links" style="background-image: url('/static/images/Tee j.png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">Tee jay</p>
+    </div>
+     </a>
+<!-- checked 1 -->
+     <a href="{% url 'Pre_Anim_Vids' 'anim' %}" ><div class="links" style="background-image: url('/static/images/tuts & anim vids.png');  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;">
+        <p style="text-shadow: 0px 0px 6px black, 0px 0px 6px black, 0px 0px 6px black;">animated vids</p>
+    </div>
+     </a>
+</div>
+
+
+<div class="animatedVids">
+    <div class="caption">
+        <h1>Pre Animated Art</h1>
+        <p>Enjoy Visually appealing art <br> animated by audrey art</p>
+    </div>
+    
+        
+   
+    <div class="vids">
+        {% for i in videos %}
+        <div class="vidCon">
+            {% video i.video '300x300' %}
+            <h3>{{ i.title }}</h5>
+            <p>AudreyArt</p>
+            <p>{{ i.created }}</p>
+        </div>
+        {% empty %}
+        <p>empty section comming soon!!!</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
+
+<section>
+
+    
+    <div class="anim">
+        <div class="element">
+        cover_art
+        </div>
+        <div class="element">
+           •
+            </div>
+        <div class="element">
+        sketch
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        2D_Wallpaper
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        animated_videos
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        potrait
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        thumbnail_sketches
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        toon_art
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        Tee_j
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        music_cover_art
+        </div>
+        <div class="element">
+            •
+            </div>
+        <div class="element">
+        tutorial
+        </div>
+        <div class="element">
+            •
+             </div>
+    </div>
+</section>
+<footer>
+    <div class="first">
+        <div class="email">
+            <h1>Get the best of our newsletter</h1>
+            <p>Stay upto date with lattest news, anouncements, articles etc.</p>
+        </div>
+        <div class="form">
+            <form action="#">
+                <input type="email" name="email" id="email">
+                <input type="submit" name="submit" value="Subscribe">
+            </form>
+        </div>
+    </div>
+    
+    <div class="wrapper1">
+        <div class="logo">
+            <h1>Audrey <span style="color: red;">Art</span></h1>
+            <p>Bridging the gap <br> between art and <br> reality</p>
+        </div>
+        <div class="content">
+            <div class="cont1">
+                <h1 style="font-size: 18px; line-height: 40px;">Explore</h1>
+                <a href="#"><p style="font-size: 13px; color: aliceblue;">privacy policy and <br> cookie policy</p></a>
+            </div>
+
+            <div class="cont2">
+                <h1 style="font-size: 18px;">Company Info</h1>
+                <a href="#"><p style="font-size: 13px; color: aliceblue; margin-top: 10px;">Contact Us</p></a>
+            </div>
+
+            <div class="cont3">
+                <h1 style="font-size: 18px;">Explore Services</h1>
+                <a href="#"><p style="font-size: 13px; color: aliceblue; margin-top: 10px;">Certificate and Verification</p></a>
+            </div>
+
+           
+        </div>
+         
+    </div>
+
+
+    <div class="des">
+        <p>Audrey Art is a digital art Company specialized in bringing art to life, we run your music <br>
+        cover art,personal potrait, character design,thumbnail sketches,2D Wallpaper <br>
+        Animation,tutorial and lot more.
+        </p>
+    </div>
+
+
+</footer>
+
+<section class="lastPart">
+    <div class="copyright">
+        <p>All Right Reserve © 2023 AudreyArt</p>
+        <div class="icons">
+            <a href="https://www.facebook.com/profile.php?id=100078046080429"><img src="{% static 'images/facebook icon.png' %}" alt="facebook" style="scale: 1.2rem;"></a>
+            <a href="https://www.instagram.com/vincearttt/"><img src="{% static 'images/instagram icon1.png' %}" alt="instagram"></a>
+            <a href=""><img src="{% static 'images/linkedIn icon`.png' %}" alt="linkedIn"></a>
+            <a href="https://twitter.com/Audreyart7?t=WGrxUUfzrdjVOADVxTe_hA&s=09"><img src="{% static 'images/twitter icon1.png' %}" alt="twitter"></a>
+        </div>
+    </div>
+</section>
+
+
+   
+
+</body>
+{% block script %}
+<script>  
+//  type="javascript" src="{ % static 'js/index.js' % }">
+
+
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("slide");
+  let dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "flex";  
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 6500); // Change image every 2 seconds
+};
+
+
+let menu = document.querySelector('#menu-icon');
+let navlist = document.querySelector('.navlist');
+
+menu.onclick = () => {
+  menu.classList.toggle('bx-x');
+  navlist.classList.toggle('open');
+}
+
+
+
+var typed = new Typed('.element', {
+  strings: ["2D Wallpaper.", "album cover.","character design","cover art","Non-Fundable Tokens","portrait toon art","Tee jee","tuts & anim vids"],
+  typeSpeed: 110,
+  backSpeed: 110,
+  loop: true,
+  backDelay: 2000,
+});
+
+
+
+</script>
+{% endblock %}
+</html>

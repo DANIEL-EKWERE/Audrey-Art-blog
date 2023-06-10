@@ -1,0 +1,113 @@
+
+
+
+.body{
+    margin-top: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.Container-signup{
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
+    background-color: white;
+    flex-direction: column;
+    color: rgba(4, 7, 32);
+}
+
+.profile-items{
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 13px;
+    
+}
+.profile-items i{
+    font-size: 1.5rem;
+    color: rgba(4, 7, 32);
+}
+.profile-items h1,.profile-items p{
+    margin: 0;
+}
+.form{
+    width: 30rem; 
+}
+.form-items {
+    border-style: none;
+}
+.form-items a{
+    text-decoration: none;
+   
+}
+.form-items .items{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom:1px solid grey;
+    font-size: 1.2rem;
+}
+.form-items .items input{
+    border-style: none;
+    outline: none;
+    background: none;
+    margin-left: 0.6rem;
+    width: 100%;
+}
+.checkbox{
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2rem;
+}
+.checkbox p{
+    width: 92%;
+    font-size: 0.8rem;
+}
+.submit button{
+    border: none;
+   color: white;
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.4rem;
+    font-weight: 900;
+    background-color: rgba(4, 7, 32);
+}
+.submit button:hover{
+    background-color: #a435f0;
+}
+.form-items .login{
+    border-top: 1px solid grey;
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+@media screen and (max-width:400px) {
+    .container{
+        width: 80vw;
+        height: fit-content;
+    }
+    .profile-items{
+        width:80%;
+        margin-top: 2rem;
+    }
+    .profile-items i{
+        font-size: 2.5rem;
+    }
+    .form{
+        width:80%;
+    }
+    .form-items .items{
+        font-size: 1.2rem;
+    }
+    .checkbox p{
+        overflow-x: hidden;
+    }
+}

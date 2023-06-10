@@ -1,0 +1,27 @@
+<div class="next">
+    <a href="#">pages: {{ page.number }}/{{ page.paginator.num_pages }}</a>
+</div>
+
+<div class="container" style="width: 100vw; align-items: center; justify-content: center;">
+    <ul style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+        {% if page.has_previous %}
+        <li><a href="{% url 'category' cate %}?page={{ page.previous_page_number }}" id="cate"  style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">Previous</a></li>
+        {% endif %}
+
+
+    
+
+
+        {% for num_page in page.paginator.page_range %}
+        {% if num_page == page.number %}
+        <li><a href="{% url 'category' cate %}?page={{ num_page }}" style="padding: 5px 10px; background-color: blueviolet; color: white; margin: 5px; font-size: 15px; border: 2px solid blueviolet; border-radius: 10px;">{{ num_page }}</a></li>
+        {% else %}
+        <li><a href="{% url 'category' cate %}?page={{ num_page }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">{{ num_page }}</a></li>
+        {% endif %}
+        {% endfor %}
+        <!--  -->
+        {% if page.has_next %}
+        <li><a href="{% url 'category' cate %}?page={{ page.next_page_number }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">Next</a></li>
+        {% endif %}
+    </ul>
+</div>

@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/category.css' %}">
+
+    
+    <!-- boxicon link-->
+    <link rel="stylesheet" href="{% static 'https://unpkg.com/boxicons@latest/css/boxicons.min.css' %}">
+
+    <!-- remixicon link -->
+    <link rel="stylesheet" href="{% static 'https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css' %}">
+
+    <!-- google font link -->
+    <link rel="preconnect" href="{% static 'https://fonts.googleapis.com' %}">
+    <link rel="preconnect" href="{% static 'https://fonts.gstatic.com' %}" crossorigin>
+    <link href="{% static 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap' %}" rel="stylesheet">
+
+
+    <title>Category</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">Audrey <span style="color: red;">Art</span></a>
+
+        <ul class="navlist">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Subscribe</a></li>
+        </ul>
+
+        <div class="bx bx-menu" id="menu-icon"></div>
+        <a href="#" class="getStarted">Get Started</a>
+    </header>
+  
+    {% if cate == '2d wallpaper' %} <!-- checked 4-->
+    <div class="hero" style="background-image: url('/static/images/2D Wallpaper.png');">
+    {% elif cate == 'music cover art' %} <!-- checked 5-->
+    <div class="hero" style="background-image: url('/static/images/cover .png');">
+    {% elif cate == 'portrait toon art' %} <!-- checked 2-->
+    <div class="hero" style="background-image: url('/static/images/portrait toon art.png');">
+    {% elif cate == 'tee jay' %}  <!-- checked 8-->
+    <div class="hero" style="background-image: url('/static/images/Tee j.png');">
+    {% elif cate == 'tutorials' %}  <!-- checked 3-->
+    <div class="hero" style="background-image: url('/static/images/Tee jee.png');">
+    {% elif cate == 'character design' %} <!-- checked 1-->
+    <div class="hero" style="background-image: url('/static/images/character design.png');">
+    {% elif cate == 'sketches' %} <!-- checked 6-->
+    <div class="hero" style="background-image: url('/static/images/thumbnail sketches.png');">
+    {% elif cate == 'pre anim vids' %}  <!-- checked 9-->
+    <div class="hero" style="background-image: url('/static/images/tuts & anim vids.png');">
+    {% else %}
+        <div class="hero" style="background-image: url('/static/images/NFTs.png');"> <!-- checked 7-->
+    {% endif %}
+        <div class="content">
+            <!-- <h4>Hello, my name is</h4> -->
+            <h1 class="h1"><span>{{ cate.title }}</span></h1>
+            <h3 class="h3">Post from the <span>{{ cate.title }}</span> category</h3>
+            <div class="newsletter">
+                <form action="">
+                    <input type="email" name="email" id="mail" placeholder="Enter Your Email Here">
+                    <input type="submit" name="submit" value="Subscribe">
+                </form>
+            </div>
+           <p> Subscribe to our newsletter for the {{ cate }}<br>
+            best post from the <span>  {{ cate.title }}  </span>category as we upload them.</p>
+        </div>
+    </div>
+  
+
+    <section class="first_part">
+<div class="cap">
+    <h5>{{ cate.title }} Posts</h5>
+<p>list of post in the {{ cate.title }} category</p>
+</div>
+    </section>
+ 
+    <section class="second_part">
+
+        <div class="body">
+            {% for post in page.object_list %}
+        <div class="wrapper">
+            <div class="pt1">
+                <img src="{{ post.image.url }}" alt="">
+            </div>
+            <div class="pt2">
+                <div class="time">
+                    <div class="upper">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.author }}</p>
+                    </div>
+                    <p>{{ post.created }}</p>
+                </div>
+                
+                <p>{{post.body|safe|truncatechars:50}}</p>
+                <div class="sec">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'Post_Detail' post.id %}" id="post.id">Read</a>
+                    <a href="{% url 'update_post' post.id %}" id="post.id">update</a>
+                    <a href="delete/{{post.id}}" id="{{post.id}}">delete</a>
+                    {% else %}
+                    <a href="{% url 'Post_Detail' post.id %}" id="post.id">Read</a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+
+        </div>
+
+    </section>
+
+    <div class="next">
+        <a href="#">pages: {{ page.number }}/{{ page.paginator.num_pages }}</a>
+    </div>
+
+    <div class="container" style="width: 100vw; align-items: center; justify-content: center;">
+        <ul style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+            {% if page.has_previous %}
+            <li><a href="{% url 'category' cate %}?page={{ page.previous_page_number }}" id="cate"  style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">Previous</a></li>
+            {% endif %}
+
+<!-- here -->
+            {% if page.number|add:'-2' > 1 %}
+
+            <li><a href="{% url 'category' cate %}?page={{ page.number|add:'-2' }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">&hellip;</a></li>
+            
+            {% endif %}
+
+<!-- here -->
+            {% for num_page in page.paginator.page_range %}
+            {% if num_page == page.number %}
+            <li><a href="{% url 'category' cate %}?page={{ num_page }}" style="padding: 5px 10px; background-color: blueviolet; color: white; margin: 5px; font-size: 15px; border: 2px solid blueviolet; border-radius: 10px;">{{ num_page }}</a></li>
+            {% elif num_page > page.number|add:'-2' and num_page < page.number|add:'2' %}  <!-- here -->
+            <li><a href="{% url 'category' cate %}?page={{ num_page }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">{{ num_page }}</a></li>
+            {% endif %}
+            {% endfor %}
+            <!-- here -->
+
+            {% if page.paginator.num_page > page.number|add:'-2' %}
+            <li><a href="{% url 'category' cate %}?page={{ page.number|add:'2' }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">&hellip;</a></li>
+            <li><a href="{% url 'category' cate %}?page={{ num_page }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">{{ num_page }}</a></li>
+            <li><a href="{% url 'category' cate %}?page={{ page.paginator.num_pages }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">{{ page.paginator.num_pages }}</a></li>
+            {% endif %}
+<!-- here -->
+            {% if page.has_next %}
+            <li><a href="{% url 'category' cate %}?page={{ page.next_page_number }}" style="padding: 5px 10px; background-color: white; margin: 5px; font-size: 15px; color: blueviolet; border: 2px solid blueviolet; border-radius: 10px;">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="anim">
+        <div class="element">
+        cover_art
+        </div>
+        <div class="element">
+           •
+            </div>
+        <div class="element">
+        sketch
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        2D_Wallpaper
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        animated_videos
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        potrait
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        thumbnail_sketches
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        toon_art
+        </div>
+        <div class="element">
+            •
+             </div>
+        <div class="element">
+        Tee_j
+        </div>
+        <div class="element">
+            •
+        </div>
+        <div class="element">
+        music_cover_art
+        </div>
+        <div class="element">
+            •
+        </div>
+        <div class="element">
+        tutorial
+        </div>
+        <div class="element">
+            •
+        </div>
+    </div>
+
+    <footer>
+        <div class="first">
+            <div class="email">
+                <h1>Get the best of our newsletter</h1>
+                <p>Stay upto date with lattest news, anouncement, article etc.</p>
+            </div>
+            <div class="form">
+                <form action="#">
+                    <input type="email" name="email" id="email">
+                    <input type="submit" name="submit" value="Subscribe">
+                </form>
+            </div>
+        </div>
+        
+        <div class="wrapper1">
+            <div class="logo">
+                <h1>Audrey <span style="color: red;">Art</span></h1>
+                <p>Bridging the gap <br> between art and <br> reality</p>
+            </div>
+
+            
+            <div class="content">
+                <div class="cont1">
+                    <h1 style="font-size: 18px; line-height: 40px;">Explore</h1>
+                    <a href="#"><p style="font-size: 13px; color: aliceblue;">privacy policy and <br> cookie policy</p></a>
+                </div>
+    
+                <div class="cont2">
+                    <h1 style="font-size: 18px;">Company Info</h1>
+                    <a href="#"><p style="font-size: 13px; color: aliceblue; margin-top: 10px;">Contact Us</p></a>
+                </div>
+    
+                <div class="cont3">
+                    <h1 style="font-size: 18px;">Explore Services</h1>
+                    <a href="#"><p style="font-size: 13px; color: aliceblue; margin-top: 10px;">Certificate and Verification</p></a>
+                </div>
+    
+               
+            </div>
+             
+        </div>
+    
+    
+        <div class="des">
+            <p>Audrey Art is a digital art Company specialized in bringing art to life, we run your music <br>
+            cover art,personal potrait, character design,thumbnail sketches,2D Wallpaper <br>
+            Animation,tutorial and lot more.
+            </p>
+        </div>
+    
+    
+    </footer>
+     
+    <section class="lastPart">
+        <div class="copyright">
+            <p>All Right Reserve © 2023 AudreyArt</p>
+            <div class="icons">
+                <img src="{% static 'images/facebook icon.png' %}" alt="facebook" style="scale: 1.2rem;">
+                <img src="{% static 'images/instagram icon1.png' %}" alt="instagram">
+                <img src="{% static 'images/linkedIn icon`.png' %}" alt="linkedIn">
+                <img src="{% static 'images/twitter icon1.png' %}" alt="twitter">
+            </div>
+        </div>
+
+    </section>
+    <script src="category.js"></script>
+</body>
+</html>
